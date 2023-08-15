@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/provider/auth.dart';
-import 'package:flutter_crud/provider/crud_data.dart';
-import 'package:flutter_crud/view/login_screen.dart';
-import 'package:flutter_crud/view/tweet_screen.dart';
+import 'package:photoEditer/provider/auth.dart';
+import 'package:photoEditer/view/login_screen.dart';
+import 'package:photoEditer/view/photoediter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -15,14 +14,12 @@ void main() async {
   runApp(
     MultiProvider(
       providers: providers,
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 List<SingleChildWidget> providers = [
-  ChangeNotifierProvider<CrudData>(create: (_) => CrudData()
-  ),
   ChangeNotifierProvider<Auth>(create: (_) => Auth()
   ),
 ];
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
-                return const TweetScreen();
+                return const PhotoEditorPage();
               } else {
                 return const LoginScreen();
               }
